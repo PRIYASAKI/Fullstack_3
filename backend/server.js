@@ -1024,6 +1024,10 @@ notificationSchema.post("save", (doc) => {
   broadcastNotification(doc)
 })
 
+// Add this route for forgot password (move the logic here)
+app.post("/api/forgot-password", async (req, res) => {
+  const { email } = req.body
+  try {
     // Generate 6-digit PIN
     const pin = Math.floor(100000 + Math.random() * 900000).toString()
 
