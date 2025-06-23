@@ -1009,20 +1009,20 @@ const broadcastNotification = (notification) => {
   })
 }
 
-// Modify the server.listen to use the HTTP server
+// Modify the server.listen to use the HTTP server and dynamic port
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
+})
 
-// Add these routes before the server.listen line
+// Add a root route for health checks and Render's base URL
+app.get("/", (req, res) => {
+  res.send("API is running...")
+})
 
-// Forgot Password - Send Reset PIN
-app.post("/api/forgot-password", async (req, res) => {
-  const { email } = req.body
-
-  try {
-    // Check if user exists
-    const user = await User.findOne({ email })
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" })
-    }
+// Add a post-save hook to the Notification model to broadcast new notifications
+notificationSchema.post("save", (doc) => {
+  broadcastNotification(doc)
+})
 
     // Generate 6-digit PIN
     const pin = Math.floor(100000 + Math.random() * 900000).toString()
