@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import "./AdminDashboard.css"
+import { API_URL } from "../api" // <-- import API_URL
 
 // Icons as SVG components
 const SearchIcon = () => (
@@ -361,7 +362,7 @@ const AdminDashboard = () => {
           return
         }
 
-        const response = await axios.get("http://localhost:5000/api/admin/bookings", {
+        const response = await axios.get(`${API_URL}/api/admin/bookings`, {
           headers: { Authorization: `Bearer ${token}` },
         })
 

@@ -9,6 +9,7 @@ import "jspdf-autotable"
 import { motion, AnimatePresence } from "framer-motion"
 import { format, parseISO, eachDayOfInterval, addMonths, subMonths } from "date-fns"
 import "./room-management.css"
+import { API_URL } from "../api"
 
 const RoomManagement = () => {
   const [bookings, setBookings] = useState([])
@@ -25,7 +26,7 @@ const RoomManagement = () => {
   const fetchBookings = async () => {
     try {
       setLoading(true)
-      const response = await axios.get("http://localhost:5000/api/admin/bookings")
+      const response = await axios.get(`${API_URL}/admin/bookings`)
 
       // Filter only active bookings
       const activeBookings = response.data.bookings.filter((booking) => booking.status === "active")

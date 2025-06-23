@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./AdminLogin.css";
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { API_URL } from "../api"; // <-- import API_URL
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -19,8 +20,8 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
-      // Send login request to the backend
-      const response = await axios.post("http://localhost:5000/api/admin/login", {
+      // Use API_URL from api.js
+      const response = await axios.post(`${API_URL}/api/admin/login`, {
         email,
         password,
       });

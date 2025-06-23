@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import "./Login.css";
+import { API_URL } from "../api";
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -17,7 +18,7 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://resortease-2.onrender.com/api/register', {
+      const response = await axios.post(`${API_URL}/api/register`, {
         username,
         email,
         password,
@@ -145,4 +146,5 @@ const Register = () => {
   );
 };
 
+export default Register;
 export default Register;

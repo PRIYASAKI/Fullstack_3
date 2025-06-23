@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./About.css";
+import { API_URL } from "../api";
 
 const About = () => {
   const [formData, setFormData] = useState({
@@ -53,12 +54,10 @@ const About = () => {
     const errors = validateForm();
     
     if (Object.keys(errors).length === 0) {
-      // Form is valid, submit it
       setIsSubmitting(true);
-      
       try {
-        // Send message to server
-        await axios.post("https://resortease-2.onrender.com/api/messages", formData);
+        // Always use API_URL from api.js
+        await axios.post(`${API_URL}/api/messages`, formData);
         
         console.log("Message sent successfully:", formData);
         setFormSubmitted(true);

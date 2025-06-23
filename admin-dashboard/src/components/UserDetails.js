@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft, Mail, Phone, User, AlertCircle, MapPin, Shield, Clock, Trash, Calendar, Home, X, RefreshCw, Activity, Key, Lock, FileText, Download, UserCheck, Bell } from 'lucide-react'
 import "./UserDetails.css"
+import { API_URL } from "../api"
 
 const UserDetails = () => {
   const { userId } = useParams()
@@ -19,9 +20,6 @@ const UserDetails = () => {
   const [activityLoading, setActivityLoading] = useState(false)
   const [activityError, setActivityError] = useState("")
 
-  // Backend URL for serving static files
-  const backendUrl = "http://localhost:5000"
-
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -31,7 +29,7 @@ const UserDetails = () => {
           return
         }
 
-        const response = await fetch(`${backendUrl}/api/admin/users/${userId}`, {
+        const response = await fetch(`${API_URL}/api/admin/users/${userId}`, {
           headers: {
             Authorization: `Bearer ${adminToken}`,
           },
@@ -52,7 +50,7 @@ const UserDetails = () => {
     }
 
     fetchUserDetails()
-  }, [userId, navigate, backendUrl])
+  }, [userId, navigate])
 
   // Effect to fetch user activity when the activity tab is selected
   useEffect(() => {
@@ -67,7 +65,7 @@ const UserDetails = () => {
           return
         }
 
-        const response = await fetch(`${backendUrl}/api/admin/user-activity/${userId}`, {
+        const response = await fetch(`${API_URL}/api/admin/user-activity/${userId}`, {
           headers: {
             Authorization: `Bearer ${adminToken}`,
           },
@@ -89,7 +87,7 @@ const UserDetails = () => {
     }
 
     fetchUserActivity()
-  }, [activeTab, userId, navigate, backendUrl])
+  }, [activeTab, userId, navigate])
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -151,7 +149,7 @@ const UserDetails = () => {
           return;
         }
 
-        const response = await fetch(`${backendUrl}/api/admin/delete-user/${userId}`, {
+        const response = await fetch(`${API_URL}/api/admin/delete-user/${userId}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${adminToken}`,
@@ -179,7 +177,7 @@ const UserDetails = () => {
         return
       }
 
-      const response = await fetch(`${backendUrl}/api/admin/verify-user/${userId}`, {
+      const response = await fetch(`${API_URL}/api/admin/verify-user/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${adminToken}`,
@@ -194,7 +192,7 @@ const UserDetails = () => {
       alert("User account has been verified successfully")
 
       // Refresh user data
-      const updatedUserResponse = await fetch(`${backendUrl}/api/admin/users/${userId}`, {
+      const updatedUserResponse = await fetch(`${API_URL}/api/admin/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
@@ -220,7 +218,7 @@ const UserDetails = () => {
 
       const action = user.isLocked ? 'unlock' : 'lock';
     
-      const response = await fetch(`${backendUrl}/api/admin/${action}-user/${userId}`, {
+      const response = await fetch(`${API_URL}/api/admin/${action}-user/${userId}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${adminToken}`,
@@ -235,7 +233,7 @@ const UserDetails = () => {
       alert(`User account has been ${action}ed successfully`);
     
       // Refresh user data
-      const updatedUserResponse = await fetch(`${backendUrl}/api/admin/users/${userId}`, {
+      const updatedUserResponse = await fetch(`${API_URL}/api/admin/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
@@ -328,7 +326,7 @@ const UserDetails = () => {
               <div className="profile-avatar">
                 {user.profileImage ? (
                   <img
-                    src={`${backendUrl}${user.profileImage}`}
+                    src={`${API_URL}${user.profileImage}`}
                     alt={`${user.username}'s profile`}
                     className="avatar-image"
                     onError={(e) => {

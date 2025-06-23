@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState, useRef } from "react"
@@ -29,6 +28,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion"
 import "./UserDashboard.css"
 import SettingsSection from "./settings-section"
+import { API_URL } from "../api"
 
 const UserDashboard = () => {
   const navigate = useNavigate()
@@ -555,7 +555,7 @@ const UserDashboard = () => {
       return imagePreview
     } else if (userData?.profileImage) {
       // Use the full URL with the server address
-      return `https://resortease-2.onrender.com/${userData.profileImage}`
+      return `${API_URL}${userData.profileImage}`
     }
     return null
   }
@@ -1096,4 +1096,5 @@ const UserDashboard = () => {
   )
 }
 
+export default UserDashboard
 export default UserDashboard
