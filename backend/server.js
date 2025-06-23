@@ -1009,7 +1009,7 @@ const broadcastNotification = (notification) => {
   })
 }
 
-// Modify the server.listen to use the HTTP server and dynamic port
+// Only keep this listen call (after WebSocket setup)
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
