@@ -1175,10 +1175,6 @@ app.post("/api/reset-password", async (req, res) => {
   }
 })
 
-// Modify the server.listen to use the HTTP server
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
 
 // Add a post-save hook to the Notification model to broadcast new notifications
 notificationSchema.post("save", (doc) => {
